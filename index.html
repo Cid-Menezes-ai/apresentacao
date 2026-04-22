@@ -1,0 +1,1223 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PL - Negociação das Relações de Trabalho no Setor Público | CSB-PE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --csb-green: #4CAF50;
+            --csb-blue: #1565C0;
+            --csb-yellow: #FFC107;
+            --csb-dark-green: #2E7D32;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1628;
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            position: relative;
+        }
+        
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #4CAF50 0%, #81C784 50%, #4CAF50 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .csb-border {
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .animate-left { animation: slideInLeft 0.8s ease-out forwards; }
+        .animate-right { animation: slideInRight 0.8s ease-out forwards; }
+        .animate-up { animation: fadeInUp 0.8s ease-out forwards; }
+        
+        .delay-100 { animation-delay: 0.1s; opacity: 0; }
+        .delay-200 { animation-delay: 0.2s; opacity: 0; }
+        .delay-300 { animation-delay: 0.3s; opacity: 0; }
+        .delay-400 { animation-delay: 0.4s; opacity: 0; }
+        .delay-500 { animation-delay: 0.5s; opacity: 0; }
+        
+        .bg-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(76, 175, 80, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        
+        .nav-dot {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-dot.active {
+            background: var(--csb-green);
+            transform: scale(1.5);
+        }
+        
+        .icon-box {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.05));
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .logo-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            padding: 8px;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .amendment-box {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(21, 101, 192, 0.1));
+            border: 2px solid rgba(76, 175, 80, 0.4);
+        }
+        
+        .constitutional-highlight {
+            background: linear-gradient(90deg, rgba(76, 175, 80, 0.2), transparent);
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .oit-highlight {
+            background: linear-gradient(90deg, rgba(21, 101, 192, 0.2), transparent);
+            border-left: 4px solid #1565C0;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+
+    <!-- Navigation Dots -->
+    <div class="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 flex flex-col gap-3">
+        <button onclick="goToSlide(0)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 active" title="Capa"></button>
+        <button onclick="goToSlide(1)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Contexto"></button>
+        <button onclick="goToSlide(2)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Objetivos"></button>
+        <button onclick="goToSlide(3)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Princípios"></button>
+        <button onclick="goToSlide(4)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Estrutura"></button>
+        <button onclick="goToSlide(5)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Processo"></button>
+        <button onclick="goToSlide(6)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Representação"></button>
+        <button onclick="goToSlide(7)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Impactos"></button>
+        <button onclick="goToSlide(8)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Emenda CSB-PE"></button>
+        <button onclick="goToSlide(9)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Texto Proposto"></button>
+        <button onclick="goToSlide(10)" class="nav-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/60" title="Conclusão"></button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="fixed top-0 left-0 h-1 bg-gradient-to-r from-green-600 via-green-400 to-blue-500 z-50 progress-bar" id="progressBar" style="width: 9%"></div>
+
+    <!-- CSB-PE Logo Fixed -->
+    <div class="fixed top-6 left-6 z-50 flex items-center gap-3">
+        <div class="logo-container">
+            <img src="/mnt/agents/upload/IMG_8893.png" alt="CSB-PE" class="w-12 h-12 rounded-full object-contain">
+        </div>
+        <div class="hidden md:block">
+            <div class="text-xs text-green-400 font-bold tracking-wider">CSB-PE</div>
+            <div class="text-[10px] text-slate-400">Central dos Sindicatos Brasileiros</div>
+        </div>
+    </div>
+
+    <!-- Slide 1: Cover -->
+    <section class="slide active flex-col items-center justify-center relative bg-pattern" id="slide-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 opacity-90"></div>
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-green-500/10 rounded-full blur-3xl float-anim"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl float-anim" style="animation-delay: 3s;"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-8 max-w-5xl mx-auto">
+            <div class="mb-6 animate-up flex justify-center">
+                <div class="logo-container p-4 mb-4">
+                    <img src="/mnt/agents/upload/IMG_8893.png" alt="CSB-PE" class="w-24 h-24 rounded-full object-contain">
+                </div>
+            </div>
+            
+            <div class="mb-6 animate-up delay-100">
+                <span class="inline-block px-4 py-2 rounded-full border border-green-500/30 text-green-400 text-sm font-semibold tracking-wider uppercase bg-green-500/10">
+                    Projeto de Lei 1.893/2026
+                </span>
+            </div>
+            
+            <h1 class="serif text-5xl md:text-7xl font-black mb-6 leading-tight animate-up delay-200">
+                Negociação das Relações<br>
+                <span class="gradient-text">de Trabalho no Setor Público</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-slate-300 mb-8 max-w-3xl mx-auto animate-up delay-300 font-light">
+                Regulamentação da Convenção nº 151 da OIT e representação sindical dos servidores públicos
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 animate-up delay-400">
+                <div class="glass-card csb-border px-6 py-3 rounded-lg flex items-center gap-3">
+                    <i class="fas fa-landmark text-green-400 text-xl"></i>
+                    <span class="text-sm font-medium">Congresso Nacional</span>
+                </div>
+                <div class="glass-card csb-border px-6 py-3 rounded-lg flex items-center gap-3">
+                    <i class="fas fa-calendar text-green-400 text-xl"></i>
+                    <span class="text-sm font-medium">Abril de 2026</span>
+                </div>
+                <div class="glass-card csb-border px-6 py-3 rounded-lg flex items-center gap-3">
+                    <i class="fas fa-globe text-green-400 text-xl"></i>
+                    <span class="text-sm font-medium">Convenção OIT 151</span>
+                </div>
+            </div>
+            
+            <div class="mt-12 animate-up delay-500">
+                <button onclick="nextSlide()" class="group bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105 flex items-center gap-3 mx-auto shadow-lg shadow-green-500/20">
+                    Iniciar Apresentação
+                    <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-500 text-sm animate-bounce">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Slide 2: Contexto Histórico -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-1">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up">Contexto <span class="gradient-text">Histórico</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-100">Quatro décadas de luta pela regulamentação</p>
+            </div>
+            
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-green-500 to-transparent rounded-full hidden md:block"></div>
+                
+                <div class="space-y-12">
+                    <div class="flex flex-col md:flex-row items-center gap-8 animate-left delay-100">
+                        <div class="md:w-1/2 md:text-right">
+                            <div class="glass-card csb-border p-6 rounded-2xl hover-lift">
+                                <div class="text-green-400 font-bold text-2xl mb-2">1978</div>
+                                <h3 class="text-xl font-bold mb-2">Convenção 151 da OIT</h3>
+                                <p class="text-slate-300">Adotada em Genebra, estabelece diretrizes para relações de trabalho na administração pública, incluindo proteção contra discriminação antissindical e autonomia sindical</p>
+                            </div>
+                        </div>
+                        <div class="w-4 h-4 bg-green-500 rounded-full border-4 border-slate-900 z-10 hidden md:block"></div>
+                        <div class="md:w-1/2"></div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center gap-8 animate-right delay-200">
+                        <div class="md:w-1/2"></div>
+                        <div class="w-4 h-4 bg-green-500 rounded-full border-4 border-slate-900 z-10 hidden md:block"></div>
+                        <div class="md:w-1/2 md:text-left">
+                            <div class="glass-card csb-border p-6 rounded-2xl hover-lift">
+                                <div class="text-green-400 font-bold text-2xl mb-2">2008-2013</div>
+                                <h3 class="text-xl font-bold mb-2">Ratificação Brasileira</h3>
+                                <p class="text-slate-300">Mensagem presidencial em 2008, ratificação em 2010 e promulgação pelo Decreto nº 7.944/2013. Art. 4º: proteção adequada contra atos de discriminação antissindical</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center gap-8 animate-left delay-300">
+                        <div class="md:w-1/2 md:text-right">
+                            <div class="glass-card csb-border p-6 rounded-2xl hover-lift">
+                                <div class="text-green-400 font-bold text-2xl mb-2">2023</div>
+                                <h3 class="text-xl font-bold mb-2">Grupo de Trabalho Interministerial</h3>
+                                <p class="text-slate-300">GTI com 5 ministérios e <span class="text-green-400 font-semibold">6 centrais sindicais (CSB, CUT, CTB, Força, UGT, NCST)</span> constrói o texto base desta PL</p>
+                            </div>
+                        </div>
+                        <div class="w-4 h-4 bg-green-500 rounded-full border-4 border-slate-900 z-10 hidden md:block"></div>
+                        <div class="md:w-1/2"></div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center gap-8 animate-right delay-400">
+                        <div class="md:w-1/2"></div>
+                        <div class="w-4 h-4 bg-green-500 rounded-full border-4 border-slate-900 z-10 hidden md:block ring-4 ring-green-500/30"></div>
+                        <div class="md:w-1/2 md:text-left">
+                            <div class="glass-card csb-border p-6 rounded-2xl hover-lift border-green-500/50 border-2">
+                                <div class="text-green-400 font-bold text-2xl mb-2">15 de Abril de 2026</div>
+                                <h3 class="text-xl font-bold mb-2">Assinatura Presidencial</h3>
+                                <p class="text-slate-300">Presidente Lula assina o PL e encaminha ao Congresso Nacional. Cumprimento do compromisso de transição com as centrais sindicais.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Objetivos -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-2">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up">Objetivos da <span class="gradient-text">Negociação</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-100">Art. 3º - Finalidades institucionais do processo negocial</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card csb-border p-8 rounded-2xl hover-lift animate-up delay-100 group">
+                    <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shield-alt text-3xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Prevenção ao Assédio</h3>
+                    <p class="text-slate-400 leading-relaxed">Atuar para prevenir o assédio e todas as formas de discriminação no ambiente de trabalho público</p>
+                </div>
+                
+                <div class="glass-card csb-border p-8 rounded-2xl hover-lift animate-up delay-200 group">
+                    <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-handshake text-3xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Autocomposição</h3>
+                    <p class="text-slate-400 leading-relaxed">Prevenir e tratar conflitos, buscando solução por autocomposição entre as partes</p>
+                </div>
+                
+                <div class="glass-card csb-border p-8 rounded-2xl hover-lift animate-up delay-300 group">
+                    <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-balance-scale text-3xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Redução da Judicialização</h3>
+                    <p class="text-slate-400 leading-relaxed">Minimizar conflitos judiciais entre a administração pública e os servidores/empregados públicos</p>
+                </div>
+                
+                <div class="glass-card csb-border p-8 rounded-2xl hover-lift animate-up delay-400 group">
+                    <div class="icon-box w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-comments text-3xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Redução de Greves</h3>
+                    <p class="text-slate-400 leading-relaxed">Reduzir a incidência de greves no setor público através do diálogo institucional</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 glass-card csb-border p-8 rounded-2xl animate-up delay-500 border-l-4 border-green-500">
+                <div class="flex items-start gap-4">
+                    <i class="fas fa-lightbulb text-green-400 text-2xl mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Meta Institucional</h3>
+                        <p class="text-slate-300 leading-relaxed">Promover o equilíbrio entre os interesses da administração pública e dos servidores, contribuindo para o aperfeiçoamento das políticas públicas e a melhoria dos serviços oferecidos à sociedade.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Princípios -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-3">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up">Princípios <span class="gradient-text">Fundamentais</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-100">Art. 2º - Além dos princípios constitucionais do art. 37</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card csb-border p-6 rounded-xl hover-lift animate-up delay-100 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-8xl text-green-500/5 font-black">I</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i class="fas fa-users text-green-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Democratização</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm">Democratização das relações de trabalho no setor público</p>
+                </div>
+                
+                <div class="glass-card csb-border p-6 rounded-xl hover-lift animate-up delay-200 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-8xl text-green-500/5 font-black">II</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i class="fas fa-chart-line text-green-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Melhoria Contínua</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm">Melhoria contínua da prestação de serviços à sociedade</p>
+                </div>
+                
+                <div class="glass-card csb-border p-6 rounded-xl hover-lift animate-up delay-300 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-8xl text-green-500/5 font-black">III</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i class="fas fa-equals text-green-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Paridade</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm">Paridade de representação na negociação entre governo e entidades</p>
+                </div>
+                
+                <div class="glass-card csb-border p-6 rounded-xl hover-lift animate-up delay-100 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-8xl text-green-500/5 font-black">IV</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i class="fas fa-user-check text-green-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Legitimidade</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm">Legitimidade dos negociadores com poderes para decidir</p>
+                </div>
+                
+                <div class="glass-card csb-border p-6 rounded-xl hover-lift animate-up delay-200 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-8xl text-green-500/5 font-black">V</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i class="fas fa-balance-scale-right text-green-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Razoabilidade</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm">Razoabilidade das propostas apresentadas pelas partes</p>
+                </div>
+                
+                <div class="glass-card csb-border p-6 rounded-xl hover-lift animate-up delay-300 relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-8xl text-green-500/5 font-black">VI</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                            <i class="fas fa-eye text-green-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">Transparência</h3>
+                    </div>
+                    <p class="text-slate-400 text-sm">Transparência e boa-fé no processo de negociação</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center animate-up delay-400">
+                <p class="text-slate-500 text-sm italic">Princípios constitucionais mantidos: legalidade, impessoalidade, moralidade, publicidade e eficiência (art. 37, CF)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Abrangência -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-4">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up">Abrangência <span class="gradient-text">e Estrutura</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-100">Arts. 1º e 5º - Aplicação e periodicidade</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8 items-start">
+                <div class="animate-left delay-100">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-sitemap text-green-400"></i>
+                        Âmbito de Aplicação
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="glass-card csb-border p-5 rounded-xl border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-400 mb-2">Abrange</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Administração direta, autárquica e fundacional da União, Estados, DF e Municípios</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Servidores públicos dos referidos entes</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-check text-green-500 mt-1"></i>
+                                    <span>Empregados públicos regidos pela CLT (ingresso por concurso)</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="glass-card csb-border p-5 rounded-xl border-l-4 border-red-500">
+                            <h4 class="font-bold text-red-400 mb-2">Não Abrange</h4>
+                            <ul class="space-y-2 text-slate-300 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fas fa-times text-red-500 mt-1"></i>
+                                    <span>Empregados de empresas estatais e pessoas jurídicas de direito privado</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-right delay-200">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-clock text-green-400"></i>
+                        Periodicidade e Organização
+                    </h3>
+                    
+                    <div class="glass-card csb-border p-6 rounded-2xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-slate-400">Negociação Anual Obrigatória</span>
+                            <span class="text-3xl font-black text-green-400">1x/ano</span>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
+                                <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-calendar-alt text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Período Definido em Regulamento</h4>
+                                    <p class="text-sm text-slate-400">Calendário e cronograma estabelecidos previamente</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
+                                <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-file-contract text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Dispensa Possível</h4>
+                                    <p class="text-sm text-slate-400">Quando houver acordo coletivo em vigor (Parágrafo único, Art. 5º)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
+                                <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-building text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold">Instituição por Poder/Órgão</h4>
+                                    <p class="text-sm text-slate-400">Cada Poder e órgão constitucionalmente autônomo regula seu processo (Art. 4º)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Processo -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-5">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up">Processo de <span class="gradient-text">Negociação</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-100">Arts. 9º a 13º - Etapas e formalização</p>
+            </div>
+            
+            <div class="grid md:grid-cols-5 gap-4 mb-12">
+                <div class="glass-card csb-border p-4 rounded-xl text-center animate-up delay-100 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                    <i class="fas fa-calendar-check text-3xl text-green-400 mb-3 mt-2"></i>
+                    <h4 class="font-bold text-sm">Definição</h4>
+                    <p class="text-xs text-slate-400 mt-1">Calendário e cronograma</p>
+                </div>
+                
+                <div class="glass-card csb-border p-4 rounded-xl text-center animate-up delay-200 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                    <i class="fas fa-inbox text-3xl text-green-400 mb-3 mt-2"></i>
+                    <h4 class="font-bold text-sm">Recepção</h4>
+                    <p class="text-xs text-slate-400 mt-1">Da pauta de reivindicações</p>
+                </div>
+                
+                <div class="glass-card csb-border p-4 rounded-xl text-center animate-up delay-300 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                    <i class="fas fa-play-circle text-3xl text-green-400 mb-3 mt-2"></i>
+                    <h4 class="font-bold text-sm">Instalação</h4>
+                    <p class="text-xs text-slate-400 mt-1">Do processo negocial</p>
+                </div>
+                
+                <div class="glass-card csb-border p-4 rounded-xl text-center animate-up delay-400 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">4</div>
+                    <i class="fas fa-file-signature text-3xl text-green-400 mb-3 mt-2"></i>
+                    <h4 class="font-bold text-sm">Pactuação</h4>
+                    <p class="text-xs text-slate-400 mt-1">Do instrumento de acordo</p>
+                </div>
+                
+                <div class="glass-card csb-border p-4 rounded-xl text-center animate-up delay-500 relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">5</div>
+                    <i class="fas fa-archive text-3xl text-green-400 mb-3 mt-2"></i>
+                    <h4 class="font-bold text-sm">Publicização</h4>
+                    <p class="text-xs text-slate-400 mt-1">E guarda do instrumento</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card csb-border p-6 rounded-2xl animate-left delay-200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-3">
+                        <i class="fas fa-users-cog text-green-400"></i>
+                        Participantes (Art. 11º)
+                    </h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                            <span><strong>Entidades sindicais</strong> representativas (designam seus representantes)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                            <span><strong>Representantes da administração</strong> (designados pela autoridade competente)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                            <span>Forma preferencialmente <strong>paritária</strong></span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card csb-border p-6 rounded-2xl animate-right delay-300">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-3">
+                        <i class="fas fa-file-alt text-green-400"></i>
+                        Termo de Acordo (Art. 13º)
+                    </h3>
+                    <ul class="space-y-2 text-slate-300 text-sm">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400 font-bold">a)</span>
+                            <span>Identificação das partes e representantes legais</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400 font-bold">b)</span>
+                            <span>Objeto negociado</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400 font-bold">c)</span>
+                            <span>Resultados alcançados</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400 font-bold">d)</span>
+                            <span>Condições e formas de implementação</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400 font-bold">e)</span>
+                            <span>Período de vigência</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                        <p class="text-xs text-green-200"><i class="fas fa-info-circle mr-2"></i>Subscrito pelos representantes e sujeito à análise jurídica e de mérito do chefe de Poder (Art. 8º)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Representação Sindical -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-6">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up">Representação <span class="gradient-text">Sindical</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-100">Arts. 14º a 18º - Estrutura e garantias</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass-card csb-border p-6 rounded-2xl animate-left delay-100">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-3">
+                            <i class="fas fa-sitemap text-green-400"></i>
+                            Estrutura Representativa (Art. 15º)
+                        </h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center p-4 bg-white/5 rounded-xl">
+                                <i class="fas fa-building text-2xl text-green-400 mb-2"></i>
+                                <h4 class="font-bold text-sm">Sindicatos</h4>
+                            </div>
+                            <div class="text-center p-4 bg-white/5 rounded-xl">
+                                <i class="fas fa-layer-group text-2xl text-green-400 mb-2"></i>
+                                <h4 class="font-bold text-sm">Federações</h4>
+                            </div>
+                            <div class="text-center p-4 bg-white/5 rounded-xl">
+                                <i class="fas fa-landmark text-2xl text-green-400 mb-2"></i>
+                                <h4 class="font-bold text-sm">Confederações</h4>
+                            </div>
+                            <div class="text-center p-4 bg-white/5 rounded-xl">
+                                <i class="fas fa-globe-americas text-2xl text-green-400 mb-2"></i>
+                                <h4 class="font-bold text-sm">Centrais</h4>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                            <p class="text-sm text-blue-200"><i class="fas fa-info-circle mr-2"></i><strong>Parágrafo único:</strong> Na ausência de sindicatos, associações de caráter classista poderão representar os servidores (Art. 15º, § único)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card csb-border p-6 rounded-2xl animate-left delay-200">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-3">
+                            <i class="fas fa-id-badge text-green-400"></i>
+                            Representação Federal (Art. 16º)
+                        </h3>
+                        <p class="text-slate-300">A representação sindical de servidores e empregados públicos <strong>federais</strong> será realizada por <span class="text-green-400 font-bold">entidades nacionais</span>, responsáveis pelo processo de negociação.</p>
+                    </div>
+                </div>
+                
+                <div class="animate-right delay-300">
+                    <div class="glass-card csb-border p-6 rounded-2xl h-full border-2 border-green-500/30">
+                        <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                            <i class="fas fa-user-shield text-green-400"></i>
+                            Licença Sindical
+                        </h3>
+                        
+                        <div class="space-y-4">
+                            <div class="p-4 bg-gradient-to-br from-green-500/20 to-transparent rounded-xl border border-green-500/30">
+                                <h4 class="font-bold text-green-400 mb-2">Art. 17º (Alteração Lei 8.112/90)</h4>
+                                <p class="text-sm text-slate-300 mb-3">Garantia de licença <strong>com remuneração</strong> para mandato em:</p>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li class="flex items-center gap-2">
+                                        <i class="fas fa-check text-green-400"></i>
+                                        Confederação
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fas fa-check text-green-400"></i>
+                                        Federação
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <i class="fas fa-check text-green-400"></i>
+                                        Sindicato representativo
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="p-4 bg-white/5 rounded-xl">
+                                <h4 class="font-bold mb-2">Garantias (§ 4º)</h4>
+                                <p class="text-sm text-slate-400">Asseguradas todas as garantias e vantagens pessoais e previdenciárias do cargo ocupado na data do afastamento</p>
+                            </div>
+                            
+                            <div class="p-4 bg-white/5 rounded-xl">
+                                <h4 class="font-bold mb-2">§ 3º - Associações</h4>
+                                <p class="text-sm text-slate-400">Na ausência de sindicatos, licença garantida para associações classistas de âmbito nacional</p>
+                            </div>
+                            
+                            <div class="p-4 bg-white/5 rounded-xl">
+                                <h4 class="font-bold mb-2">§ 5º - Outras Atividades</h4>
+                                <p class="text-sm text-slate-400">Licença <strong>sem remuneração</strong> para mandato em entidade fiscalizadora da profissão ou cooperativa de servidores</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Impactos -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-7">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up">Impactos e <span class="gradient-text">Considerações</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-100">Análise do alcance institucional desta regulamentação</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="glass-card csb-border p-8 rounded-2xl animate-left delay-100">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-plus-circle text-green-400"></i>
+                        Avanços
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-gavel text-green-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Internalização da OIT</h4>
+                                <p class="text-sm text-slate-400">Regulamentação efetiva da Convenção nº 151, ratificada há mais de uma década</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-balance-scale text-green-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Democratização</h4>
+                                <p class="text-sm text-slate-400">Mecanismos permanentes de diálogo entre administração e representantes</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-handshake text-green-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Redução de Conflitos</h4>
+                                <p class="text-sm text-slate-400">Menor judicialização e incidência de greves através da negociação preventiva</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card csb-border p-8 rounded-2xl animate-right delay-200">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                        Desafios e Lacunas
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-cogs text-yellow-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Regulamentação Local</h4>
+                                <p class="text-sm text-slate-400">Necessidade de cada ente federativo e Poder regulamentar seu processo específico</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-ban text-red-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-red-400">OMISSÃO CRÍTICA</h4>
+                                <p class="text-sm text-slate-400">Ausência de previsão expressa para <strong>centrais sindicais</strong> e <strong>seccionais estaduais</strong> no Art. 17º (licença remunerada)</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-clipboard-check text-yellow-400 text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Análise de Mérito</h4>
+                                <p class="text-sm text-slate-400">Deliberações sujeitas à análise jurídica e de mérito do chefe de Poder (Art. 8º)</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Slide 9: Emenda CSB-PE - LIBERAÇÃO COMO FOCO CENTRAL -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-8">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-3 mb-4 animate-up">
+                    <div class="logo-container" style="width: 80px; height: 80px;">
+                        <img src="{logo_data_uri}" alt="CSB-PE" class="logo-img">
+                    </div>
+                </div>
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up delay-100">Proposta de <span class="gradient-text">Aprimoramento</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-200">Emenda CSB-PE: Liberação de Dirigentes de Centrais Sindicais</p>
+            </div>
+
+            <!-- FOCO CENTRAL: O QUE A PL NÃO TRATA -->
+            <div class="glass-card csb-border p-8 rounded-2xl animate-up delay-300 border-2 border-red-500/50 mb-8 bg-red-500/5">
+                <div class="flex items-start gap-4">
+                    <div class="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-3xl text-red-400"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-3 text-red-400">Lacuna Crítica da PL</h3>
+                        <p class="text-lg text-slate-200 leading-relaxed mb-4">
+                            O <strong>Art. 17</strong> (alteração ao Art. 92 da Lei 8.112/90) <span class="text-red-400 font-bold">NÃO PREVÊ</span> licença com remuneração para servidores públicos que exerçam mandatos em:
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="flex items-center gap-3 p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+                                <i class="fas fa-building text-red-400 text-xl"></i>
+                                <div>
+                                    <span class="font-bold text-white">Centrais Sindicais Nacionais</span>
+                                    <p class="text-sm text-slate-400">CSB, CUT, Força, UGT, CTB, NCST</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+                                <i class="fas fa-map-marker-alt text-red-400 text-xl"></i>
+                                <div>
+                                    <span class="font-bold text-white">Seccionais Estaduais/Distritais</span>
+                                    <p class="text-sm text-slate-400">CSB-PE, CUT-SP, Força-RJ, etc.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- COLUNA ESQUERDA: A GARANTIA FUNDAMENTAL -->
+                <div class="animate-left delay-400 space-y-6">
+                    <div class="amendment-box p-6 rounded-2xl border-l-4 border-green-500">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-3 text-green-400">
+                            <i class="fas fa-unlock-alt"></i>
+                            1º Foco: Liberação Garantida
+                        </h3>
+                        <p class="text-slate-300 mb-4">
+                            A emenda CSB-PE assegura <strong class="text-green-400">direito subjetivo</strong> à liberação para o exercício de mandato classista em Centrais Sindicais, em qualquer esfera:
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                                <span class="text-white">Âmbito <strong>Nacional</strong></span>
+                            </li>
+                            <li class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                                <span class="text-white">Âmbito <strong>Estadual</strong></span>
+                            </li>
+                            <li class="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                                <span class="text-white">Âmbito <strong>Distrital</strong></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="amendment-box p-6 rounded-2xl border-l-4 border-yellow-500">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-3 text-yellow-400">
+                            <i class="fas fa-money-bill-wave"></i>
+                            2º Foco: Manutenção Integral
+                        </h3>
+                        <p class="text-slate-300 mb-4">
+                            Durante o exercício do mandato, o servidor <strong class="text-yellow-400">deve permanecer em condições idênticas</strong> às de exercício efetivo:
+                        </p>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3 p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                                <i class="fas fa-chart-line text-yellow-400 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Progressão Funcional</span>
+                                    <p class="text-sm text-slate-400">Acesso a promoções, ascensão e progressão por capacitação</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                                <i class="fas fa-hand-holding-usd text-yellow-400 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Remuneração Integral</span>
+                                    <p class="text-sm text-slate-400">Salário, gratificações e adicionais mantidos integralmente</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                                <i class="fas fa-shield-alt text-yellow-400 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Vantagens Pessoais e Previdenciárias</span>
+                                    <p class="text-sm text-slate-400">Contagem de tempo de serviço, contribuição previdenciária, plano de saúde</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-white/5 rounded-lg">
+                            <p class="text-sm text-slate-300 italic">
+                                <i class="fas fa-balance-scale text-yellow-400 mr-2"></i>
+                                "Como se em exercício estivesse" — garantia constitucional de irredutibilidade de vencimentos
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUNA DIREITA: AUTONOMIA SINDICAL -->
+                <div class="animate-right delay-500 space-y-6">
+                    <div class="constitutional-highlight p-6 rounded-xl">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-3 text-green-400">
+                            <i class="fas fa-book-open"></i>
+                            3º Foco: Autonomia Sindical
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="glass-card p-4 rounded-lg">
+                                <h4 class="font-bold text-sm mb-2 text-green-300">Art. 8º, inciso I, CF</h4>
+                                <p class="text-sm text-slate-300 italic">
+                                    "vedadas ao Poder Público a <span class="text-green-400 font-bold">interferência e a intervenção na organização sindical</span>"
+                                </p>
+                            </div>
+                            <div class="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                <p class="text-sm text-green-200">
+                                    <i class="fas fa-exclamation-circle mr-2"></i>
+                                    <strong>Implicação:</strong> O Estado não pode condicionar a liberação à filiação da categoria de origem a uma central específica.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oit-highlight p-6 rounded-xl">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-3 text-blue-400">
+                            <i class="fas fa-globe"></i>
+                            Fundamentação Convencional
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="glass-card p-4 rounded-lg">
+                                <h4 class="font-bold text-sm mb-2 text-blue-300">Convenção 151 da OIT - Art. 4º</h4>
+                                <p class="text-sm text-slate-300 italic">
+                                    "<span class="text-blue-400 font-bold">proteção adequada contra todos os atos de discriminação</span> que acarretem violação da liberdade sindical"
+                                </p>
+                            </div>
+                            <div class="glass-card p-4 rounded-lg">
+                                <h4 class="font-bold text-sm mb-2 text-blue-300">Convenção 151 - Art. 5º</h4>
+                                <p class="text-sm text-slate-300 italic">
+                                    "As organizações de trabalhadores devem gozar de <span class="text-blue-400 font-bold">independência face às autoridades públicas</span>"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card csb-border p-6 rounded-2xl border-l-4 border-red-500">
+                        <h3 class="text-lg font-bold mb-3 flex items-center gap-3 text-red-400">
+                            <i class="fas fa-times-circle"></i>
+                            O Problema Concreto
+                        </h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Um servidor do Judiciário filiado ao sindicato "X" (vinculado à Central A) pode ser eleito dirigente da <strong>CSB-PE</strong> (Central B). A PL atual <span class="text-red-400 font-bold">não garante</span> sua liberação, e se o Estado exigir filiação da categoria à CSB, estará <strong>intervindo na organização sindical</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 10: Texto Proposto -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-9">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up">Texto <span class="gradient-text">Proposto</span></h2>
+                <p class="text-slate-400 text-lg animate-up delay-100">Emenda Legislativa CSB-PE - Dispositivos Específicos</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="animate-left delay-100">
+                    <div class="amendment-box p-8 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                                <i class="fas fa-plus-circle text-green-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">1. Novo Art. 15-A</h3>
+                                <p class="text-sm text-slate-400">Inclusão no Capítulo III - Da Representação Sindical</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-800/50 p-6 rounded-xl border border-green-500/30 space-y-4">
+                            <div class="border-b border-green-500/20 pb-4">
+                                <h4 class="font-bold text-green-400 mb-2">Art. 15-A</h4>
+                                <p class="text-slate-200 leading-relaxed text-sm">
+                                    É assegurada a liberação para o exercício de mandato classista aos servidores e empregados públicos eleitos para cargos de direção em <strong class="text-green-400">Centrais Sindicais</strong>, em âmbito nacional, estadual ou distrital.
+                                </p>
+                            </div>
+                            
+                            <div class="border-b border-green-500/20 pb-4">
+                                <h4 class="font-bold text-green-400 mb-2">§ 1º</h4>
+                                <p class="text-slate-200 leading-relaxed text-sm">
+                                    A liberação de que trata o caput observará os critérios e limites estabelecidos em regulamento, garantida a manutenção da remuneração, das vantagens pessoais e dos direitos previdenciários do servidor, como se em exercício estivesse, e <strong class="text-green-400">dar-se-á independentemente da central sindical à qual a entidade representativa da categoria de origem do servidor ou empregado público esteja filiada</strong>, em respeito à autonomia e à liberdade de organização sindical.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-green-400 mb-2">§ 2º</h4>
+                                <p class="text-slate-200 leading-relaxed text-sm">
+                                    É vedada qualquer forma de <strong class="text-green-400">intervenção do Estado na composição da direção das entidades sindicais</strong>, cabendo exclusivamente a estas a definição de seus critérios de elegibilidade e representação.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-right delay-200">
+                    <div class="amendment-box p-8 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                                <i class="fas fa-edit text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">2. Ajuste no Art. 17</h3>
+                                <p class="text-sm text-slate-400">Alteração da Lei nº 8.112/1990 (Art. 92)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-800/50 p-6 rounded-xl border border-blue-500/30 space-y-4">
+                            <div class="border-b border-blue-500/20 pb-4">
+                                <h4 class="font-bold text-blue-400 mb-2">Art. 92 (Novo Caput)</h4>
+                                <p class="text-slate-200 leading-relaxed text-sm">
+                                    "É assegurado ao servidor o direito à licença com remuneração para o desempenho de mandato em <strong class="text-blue-400">central sindical, confederação, federação ou sindicato representativo da categoria</strong>, observados os seguintes limites: [...]"
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-blue-400 mb-2">§ 6º (Novo)</h4>
+                                <p class="text-slate-200 leading-relaxed text-sm">
+                                    A licença para o desempenho de mandato em central sindical será concedida <strong class="text-blue-400">independentemente da filiação da entidade representativa da categoria de origem do servidor</strong>, garantida a manutenção da remuneração, das vantagens pessoais e dos direitos previdenciários do servidor, como se em exercício estivesse, sendo vedada à administração pública qualquer ingerência na organização da entidade ou subordinação hierárquica do servidor licenciado durante o exercício do mandato.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                            <p class="text-sm text-yellow-200"><i class="fas fa-lightbulb mr-2"></i><strong>Inovação:</strong> O § 6º veda expressamente a subordinação hierárquica do servidor licenciado, garantindo sua independência funcional durante o mandato.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: Conclusão -->
+    <section class="slide flex-col justify-center relative bg-pattern px-8" id="slide-10">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto w-full pt-20">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-3 mb-4 animate-up">
+                    <div class="logo-container p-3">
+                        <img src="/mnt/agents/upload/IMG_8893.png" alt="CSB-PE" class="w-16 h-16 rounded-full object-contain">
+                    </div>
+                </div>
+                <h2 class="serif text-4xl md:text-5xl font-bold mb-4 animate-up delay-100">Conclusão <span class="gradient-text">CSB-PE</span></h2>
+            </div>
+            
+            <div class="glass-card csb-border p-8 rounded-2xl animate-up delay-200 mb-8">
+                <p class="text-lg text-slate-300 leading-relaxed text-center max-w-4xl mx-auto">
+                    A adoção destas sugestões fortalecerá o Projeto de Lei, garantindo que a negociação coletiva no setor público ocorra em um ambiente de <strong class="text-green-400">verdadeira liberdade sindical</strong>. Ao impedir que o Estado utilize a estrutura administrativa para constranger ou limitar a atuação de dirigentes de Centrais Sindicais, o projeto estará em plena conformidade com os <strong class="text-green-400">princípios constitucionais</strong> e os <strong class="text-blue-400">tratados internacionais de direitos humanos e trabalhistas</strong>.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="glass-card csb-border p-6 rounded-xl text-center animate-up delay-300">
+                    <i class="fas fa-balance-scale text-4xl text-green-400 mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Conformidade Constitucional</h3>
+                    <p class="text-sm text-slate-400">Art. 8º, inciso I, CF - Autonomia sindical e vedação à intervenção estatal</p>
+                </div>
+                
+                <div class="glass-card csb-border p-6 rounded-xl text-center animate-up delay-400">
+                    <i class="fas fa-globe-americas text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Conformidade Internacional</h3>
+                    <p class="text-sm text-slate-400">Convenção 151 da OIT - Proteção contra discriminação antissindical e independência das organizações</p>
+                </div>
+                
+                <div class="glass-card csb-border p-6 rounded-xl text-center animate-up delay-500">
+                    <i class="fas fa-hands-helping text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="font-bold text-lg mb-2">Fortalecimento Democrático</h3>
+                    <p class="text-sm text-slate-400">Garantia de que as centrais sindicais possam atuar sem ingerência estatal na composição de suas direções</p>
+                </div>
+            </div>
+            
+            <div class="text-center animate-up delay-500">
+                <div class="inline-flex items-center gap-3 glass-card csb-border px-8 py-4 rounded-full">
+                    <img src="/mnt/agents/upload/IMG_8893.png" alt="CSB-PE" class="w-10 h-10 rounded-full object-contain">
+                    <div class="text-left">
+                        <div class="text-sm font-bold text-green-400">CSB-PE</div>
+                        <div class="text-xs text-slate-400">Central dos Sindicatos Brasileiros de Pernambuco</div>
+                    </div>
+                </div>
+                <p class="mt-4 text-slate-500 text-sm">Proposta de Emenda Legislativa - Abril de 2026</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Controls -->
+    <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 flex items-center gap-4 glass-card csb-border px-6 py-3 rounded-full">
+        <button onclick="prevSlide()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <span class="text-sm font-mono text-slate-400" id="slideCounter">1 / 11</span>
+        <button onclick="nextSlide()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 11;
+        
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                }
+            });
+            
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            window.scrollTo(0, 0);
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+        
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        updateSlide();
+    </script>
+</body>
+</html>
